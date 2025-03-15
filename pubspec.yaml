@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  open_media_station_base: ^0.0.8
+  open_media_station_base: ^0.1.2
     # path: ../open_media_station_base
 
 dev_dependencies:
