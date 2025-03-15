@@ -12,11 +12,26 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
+  open_media_station_base: ^0.0.8
+    # path: ../open_media_station_base
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  msix: ^3.16.8
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/myapp.png
+
+msix_config:
+  display_name: Open Media Station - Book
+  publisher_display_name: LNA-DEV
+  publisher: CN=7B47E609-6C44-44B4-9DFA-CF58A4704989
+  identity_name: 54515LNA-DEV.OpenMediaStation-Book
+  msix_version: 0.0.1.0
+  store: true
+  logo_path: ./AppIcon.png
+  # capabilities: internetClient, location, microphone, webcam

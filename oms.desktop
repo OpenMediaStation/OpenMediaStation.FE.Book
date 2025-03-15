@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+
+Name=Book (OMS)
+Comment=Book client for OMS
+Categories=AudioVideo;TV;
+
+Icon=org.openmediastation.book
+Exec=open_media_station_book
+Terminal=false
