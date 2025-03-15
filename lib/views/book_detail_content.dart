@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:open_media_station_base/models/internal/grid_item_model.dart';
 import 'package:open_media_station_base/widgets/custom_image.dart';
@@ -9,9 +10,11 @@ class BookDetailContent extends StatelessWidget {
   const BookDetailContent({
     super.key,
     required this.itemModel,
+    required this.epubBytes,
   });
 
   final GridItemModel itemModel;
+  final Uint8List? epubBytes;
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +101,7 @@ class BookDetailContent extends StatelessWidget {
                     builder: (context, versionID, __) {
                       return PlayButton(
                         child: BookReader(
+                          epubBytes: epubBytes,
                           // itemModel: itemModel,
                           // versionID: versionID,
                         ),

@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:open_media_station_base/apis/stream_api.dart';
 import 'package:open_media_station_base/models/internal/grid_item_model.dart';
 import 'package:open_media_station_base/widgets/favorite_button.dart';
 import 'package:open_media_station_book/services/inventory_service.dart';
@@ -11,31 +14,6 @@ class BookDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget body;
-
-    if (!gridItem.fake) {
-      body = BookDetailContent(itemModel: gridItem);
-    } else {
-      body = FutureBuilder<GridItemModel>(
-        future: InventoryService.getBook(gridItem.inventoryItem!),
-        builder: (context, snapshot) {
-          GridItemModel gridItem;
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData) {
-            return const Center(child: Text('Grid item could not be loaded'));
-          } else {
-            gridItem = snapshot.data!;
-          }
-
-          return BookDetailContent(itemModel: gridItem);
-        },
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -47,7 +25,36 @@ class BookDetailView extends StatelessWidget {
           ),
         ],
       ),
-      body: body,
+      body: FutureBuilder<(GridItemModel, Uint8List?)>(
+        // Tuple type
+        future: _fetchData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData) {
+            return const Center(child: Text('Grid item could not be loaded'));
+          }
+
+          // Destructure the tuple
+          final (book, extraData) = snapshot.data!;
+
+          return BookDetailContent(itemModel: book, epubBytes: extraData);
+        },
+      ),
     );
+  }
+
+  Future<(GridItemModel, Uint8List?)> _fetchData() async {
+    final book = await InventoryService.getBook(gridItem.inventoryItem!);
+    if (book.inventoryItem?.id == null) {
+      return (book, null);
+    }
+
+    final epubBytes =
+        await StreamApi.downloadBytes("Book", book.inventoryItem!.id);
+
+    return (book, epubBytes);
   }
 }
