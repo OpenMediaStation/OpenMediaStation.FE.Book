@@ -10,8 +10,8 @@
     <string>manual</string>
     <key>provisioningProfiles</key>
     <dict>
-        <key>org.openmediastation.openMediaServerApp</key>
-        <string>OMS FE-TV Deployment</string> <!-- Name deines Profils -->
+        <key>org.openmediastation.openMediaStationBook</key>
+        <string>E-Book app Profile</string> <!-- Name deines Profils -->
     </dict>
     <key>uploadSymbols</key>
     <true/>
