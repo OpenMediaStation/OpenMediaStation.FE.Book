@@ -36,3 +36,4 @@ msix_config:
   store: true
   logo_path: ./AppIcon.png
   # capabilities: internetClient, location, microphone, webcam
+
