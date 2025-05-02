@@ -37,3 +37,4 @@ msix_config:
   logo_path: ./AppIcon.png
   # capabilities: internetClient, location, microphone, webcam
 
+
